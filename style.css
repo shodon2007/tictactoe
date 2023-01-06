@@ -1,7 +1,29 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .game-body {
     height: 100vw;
     width: 100vw;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3px;
     background-color: black;
+    border: 3px solid black;
+}
+
+.game-cell {
+    background-color: white;
 }
 
 @media (min-aspect-ratio: 1/1) {
