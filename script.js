@@ -38,8 +38,8 @@ function checkWin(board) {
         result = row1[0];
         return result;
     }
-    if (row3[0] == row2[1] && row1[2] == row3[0] && row1[2] != 0) {
-        result = row1[0]
+    if (row3[0] == row2[1] && row1[2] == row3[0] && row3[0] != 0) {
+        result = row1[2]
         return result;
     }
 
@@ -97,13 +97,27 @@ function gameClick(x, y) {
 function ifWin(winner) {
     switch (winner) {
         case 1:
-            console.log('x won');
+            alert('X won');
+            restart();
             break;
         case 2:
-            console.log('y won');
+            alert('O won');
+            restart();
             break;
         case -1:
-            console.log('draw');
+            alert('draw');
+            restart();
             break;
     }
+}
+
+function restart() {
+    board = [
+        [0, 0, 0],
+        [0, 0, 0],
+        [0, 0, 0],
+    ];
+    document.querySelectorAll('.game-cell').forEach(cell => {
+        cell.innerHTML = '';
+    })
 }
