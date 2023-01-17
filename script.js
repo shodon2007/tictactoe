@@ -1,4 +1,6 @@
 let thisPlay = 1;
+let modalWindow = document.querySelector('.game-window');
+
 board = [
     [0, 0, 0],
     [0, 0, 0],
@@ -94,19 +96,26 @@ function gameClick(x, y) {
     ifWin(winner);
 }
 
+function showWindow(text) {
+    modalWindow.classList.add('active');
+    document.querySelector('.window__text').innerHTML = text;
+}
+
+document.querySelector('.window__button').addEventListener('click', () => {
+    modalWindow.classList.remove('active');
+    restart();
+});
+
 function ifWin(winner) {
     switch (winner) {
         case 1:
-            alert('X won');
-            restart();
+            showWindow('X win')
             break;
         case 2:
-            alert('O won');
-            restart();
+            showWindow('O win')
             break;
         case -1:
-            alert('draw');
-            restart();
+            showWindow('Draw')
             break;
     }
 }

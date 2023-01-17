@@ -5,6 +5,7 @@
 }
 
 body {
+    position: relative;
     width: 100vw;
     height: 100vh;
     display: flex;
@@ -32,6 +33,49 @@ body {
     align-items: center;
     justify-content: center;
     font-size: 40px;
+}
+
+.game-window {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.game-window.active {
+    display: block;
+}
+
+.window__body {
+    color: black;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    background-color: white;
+    border: 3px solid black;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.window__button {
+    cursor: pointer;
+    padding: 5px 10px;
+    border: 1px solid black;
+    background-color: white;
+}
+
+.window__button:hover {
+    background-color: black;
+    color: white;
 }
 
 @media (min-aspect-ratio: 1/1) {
