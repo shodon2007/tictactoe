@@ -10,25 +10,11 @@
 </head>
 
 <body>
-    <div class="game-body">
-        <div class="game-cell cell00" onclick="gameClick(0,0)"></div>
-        <div class="game-cell cell01" onclick="gameClick(0,1)"></div>
-        <div class="game-cell cell02" onclick="gameClick(0,2)"></div>
-        <div class="game-cell cell10" onclick="gameClick(1,0)"></div>
-        <div class="game-cell cell11" onclick="gameClick(1,1)"></div>
-        <div class="game-cell cell12" onclick="gameClick(1,2)"></div>
-        <div class="game-cell cell20" onclick="gameClick(2,0)"></div>
-        <div class="game-cell cell21" onclick="gameClick(2,1)"></div>
-        <div class="game-cell cell22" onclick="gameClick(2,2)"></div>
-    </div>
-    <div class="game-window">
+    <div class="board"></div>
+    <div class="window">
         <div class="window__body">
-            <div class="window__text">
-                Player x|o win
-            </div>
-            <button class="window__button">
-                Okay
-            </button>
+            <div class="window__text"></div>
+            <button class="window__button" onclick="showWindow()">Okay</button>
         </div>
     </div>
     <script src="script.js"></script>

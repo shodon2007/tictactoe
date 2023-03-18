@@ -1,132 +1,89 @@
-let thisPlay = 1;
-let modalWindow = document.querySelector('.game-window');
-
-board = [
+let board = [
     [0, 0, 0],
     [0, 0, 0],
     [0, 0, 0],
-]
+];
+let thisPlayer = 1;
+const gameBody = document.querySelector('.board');
 
-function checkWin(board) {
-    let [row1, row2, row3] = board;
-    let result = 0;
-    let isFinish = false;
-
-
-
-    // Gorizontal Check
-    board.forEach(row => {
-        if (row[0] == row[1] && row[0] == row[2] && row[0] != 0) {
-            result = row[0];
-            isFinish = true;
-        }
-    });
-
-    // Check
-    if (isFinish == true) {
-        return result;
-    }
-
-    // Vertical Check
-    for (let i = 0; i != 3; i++) {
-        if (row1[i] == row2[i] && row1[i] == row3[i] && row1[i] != 0) {
-            result = row1[i];
-            return result;
-        }
-    }
-
-    // Corner Check
-    if (row1[0] == row2[1] && row1[0] == row3[2] && row1[0] != 0) {
-        result = row1[0];
-        return result;
-    }
-    if (row3[0] == row2[1] && row1[2] == row3[0] && row3[0] != 0) {
-        result = row1[2]
-        return result;
-    }
-
-    // Check to Empty
-    row1.forEach((el) => {
-        if (el == 0) {
-            isFinish = true;
-        }
-    });
-    row2.forEach((el) => {
-        if (el == 0) {
-            isFinish = true;
-        }
-    });
-    row3.forEach((el) => {
-        if (el == 0) {
-            isFinish = true;
-        }
-    });
-    if (isFinish == true) {
-        return 0;
-    }
-
-    return -1;
+function setGameBody() {
+    gameBody.innerHTML = '';
+    board.forEach((row, x) => {
+        row.forEach((cell, y) => {
+            gameBody.innerHTML += `<div class="cell c${x}${y}" onclick="cellClick(${x},${y})"></div>`;
+        });
+    })
 }
+setGameBody();
 
-function renderBoard(x, y) {
-    let cell = document.querySelector(`.cell${x}${y}`)
 
-    if (thisPlay == 1) {
-        cell.innerHTML = 'X';
+function cellClick(x, y) {
+    const isCellEmpty = (board[x][y] == 0);
+
+    if (isCellEmpty) {
+        whenCellEmpty(x, y);
     }
-    if (thisPlay == 2) {
-        cell.innerHTML = 'O';
+
+    const winner = checkWin();
+
+    if (winner) {
+        showWindow(winner);
+        restart();
     }
 }
 
-function gameClick(x, y) {
-    if (board[x][y] == 0) {
-        if (thisPlay == 1) {
-            board[x][y] = thisPlay;
-            renderBoard(x, y);
-            thisPlay = 2;
-        } else if (thisPlay == 2) {
-            board[x][y] = thisPlay;
-            renderBoard(x, y);
-            thisPlay = 1;
+function whenCellEmpty(x, y) {
+    const selectedCell = document.querySelector('.c' + x + y)
+
+    board[x][y] = thisPlayer;
+    selectedCell.innerHTML = toString(thisPlayer);
+
+    thisPlayer = thisPlayer == 1 ? 2 : 1;
+}
+
+
+function toString(number) {
+    switch (number) {
+        case 0: return " ";
+        case 1: return "X";
+        case 2: return "O";
+    }
+}
+
+
+function checkWin() {
+    for (let x = 0; x <= 2; x++) {
+        for (let y = 0; y <= 2; y++) {
+            const horizontalCheck = board[x][0] == board[x][1] && board[x][1] == board[x][2];
+            const verticalCheck = board[0][y] == board[1][y] && board[1][y] == board[2][y];
+            const leftCornerCheck = board[0][0] == board[1][1] && board[1][1] == board[2][2];
+            const rightCornerCheck = board[2][0] == board[1][1] && board[1][1] == board[0][2];
+
+
+            if (horizontalCheck && board[x][0] != 0) return board[x][0];
+            if (verticalCheck && board[0][y] != 0) return board[0][y];
+            if (leftCornerCheck && board[1][1] != 0) return board[1][1];
+            if (rightCornerCheck && board[1][1] != 0) return board[1][1];
         }
     }
 
-    let winner = checkWin(board);
-    ifWin(winner);
-}
-
-function showWindow(text) {
-    modalWindow.classList.add('active');
-    document.querySelector('.window__text').innerHTML = text;
-}
-
-document.querySelector('.window__button').addEventListener('click', () => {
-    modalWindow.classList.remove('active');
-    restart();
-});
-
-function ifWin(winner) {
-    switch (winner) {
-        case 1:
-            showWindow('X win')
-            break;
-        case 2:
-            showWindow('O win')
-            break;
-        case -1:
-            showWindow('Draw')
-            break;
-    }
+    return 0;
 }
 
 function restart() {
     board = [
         [0, 0, 0],
         [0, 0, 0],
-        [0, 0, 0],
+        [0, 0, 0]
     ];
-    document.querySelectorAll('.game-cell').forEach(cell => {
-        cell.innerHTML = '';
-    })
+    thisPlayer = 1;
+    setGameBody();
 }
+
+function showWindow(winner) {
+    const window = document.querySelector('.window');
+    const windowText = document.querySelector('.window__text');
+
+    window.classList.toggle('active');
+    windowText.innerHTML = toString(winner) + ' won';
+};
